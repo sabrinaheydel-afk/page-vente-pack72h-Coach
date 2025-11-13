@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Découvre comment sortir de tes blocages, gagner du temps et faire de l'argent rapidement. Diagnostic gratuit en 5 min.">
+    <title>Diagnostic Gratuit - Mon Business Digital Boutique™</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #4A4A8A;
+            --secondary: #8B5FBF;
+            --accent: #FF6B35;
+            --dark: #2C2C2C;
+            --light: #F5F1E8;
+            --white: #FFFFFF;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            color: var(--dark);
+            background: var(--white);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* ========== HERO SECTION ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--light) 0%, var(--white) 100%);
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .logo-section {
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+        }
+        
+        .logo img {
+            width: 100%;
+            height: auto;
+        }
+        
+        .brand-name {
+            font-size: 16px;
+            color: var(--primary);
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+        }
+        
+        .hero h1 {
+            font-size: clamp(36px, 6vw, 56px);
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero h2 {
+            font-size: clamp(20px, 3vw, 28px);
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 40px;
+            line-height: 1.4;
+        }
+        
+        .hero-benefits {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-top: 4px solid var(--accent);
+        }
+        
+        .benefits-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: left;
+            font-size: 18px;
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .benefit-icon {
+            font-size: 24px;
+            min-width: 30px;
+        }
+        
+        .benefit-text {
+            color: #555;
+        }
+        
+        .cta-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), #FF8C42);
+            color: var(--white);
+            padding: 18px 60px;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+            border: none;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.5);
+        }
+        
+        .trust-section {
+            background: #FFF9E6;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+        
+        .trust-text {
+            font-size: 16px;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+        
+        .trust-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+        }
+        
+        /* ========== ANIMATIONS ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .benefits-list {
+                font-size: 16px;
+            }
+            
+            .cta-primary {
+                padding: 16px 40px;
+                font-size: 18px;
+            }
+            
+            .trust-badges {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <!-- Logo et Brand -->
+                <div class="logo-section">
+                    <div class="logo">
+                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="20" y="20" width="160" height="120" fill="none" stroke="#4A4A8A" stroke-width="4" rx="8"/>
+                            <circle cx="100" cy="140" r="8" fill="#4A4A8A"/>
+                            <polyline points="60,80 85,55 110,75 140,40" fill="none" stroke="#8B5FBF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="brand-name">MON BUSINESS DIGITAL BOUTIQUE™</div>
+                </div>
+                
+                <!-- Headline -->
+                <h1>Tout ce qu'il te faut pour te lancer sans prise de tête</h1>
+                
+                <h2>Découvre comment sortir de tes blocages, gagner du temps et faire de l'argent rapidement</h2>
+                
+                <!-- Benefits Box -->
+                <div class="hero-benefits">
+                    <div class="benefits-list">
+                        <div class="benefit-item">
+                            <div class="benefit-icon">⚡</div>
+                            <div class="benefit-text"><strong>Diagnostic personnalisé</strong> en 5 minutes</div>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon">🎯</div>
+                            <div class="benefit-text">Découvre <strong>exactement ce qui te bloque</strong> et la solution</div>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon">📋</div>
+                            <div class="benefit-text">Reçois une <strong>stratégie personnalisée</strong> + checklist action</div>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon">🚀</div>
+                            <div class="benefit-text"><strong>Zéro engagement</strong> — juste le diagnostic, c'est gratuit</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CTA Button -->
+                <a href="quiz.html" class="cta-primary">Faire mon diagnostic gratuit →</a>
+                
+                <!-- Trust Section -->
+                <div class="trust-section">
+                    <p class="trust-text">Rejoint par:</p>
+                    <div class="trust-badges">
+                        <div class="trust-badge">✅ 150+ coachs & infopreneurs</div>
+                        <div class="trust-badge">✅ Système simple, sans tech</div>
+                        <div class="trust-badge">✅ Résultats en 72h</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

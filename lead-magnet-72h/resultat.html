@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ton Diagnostic - Mon Business Digital Boutique™</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #4A4A8A;
+            --secondary: #8B5FBF;
+            --accent: #FF6B35;
+            --dark: #2C2C2C;
+            --light: #F5F1E8;
+            --white: #FFFFFF;
+        }
+        
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            background: linear-gradient(135deg, var(--light) 0%, var(--white) 100%);
+            color: var(--dark);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* ========== RESULT HEADER ========== */
+        .result-header {
+            background: var(--white);
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        
+        .result-header h1 {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .result-header p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .profile-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), #FF8C42);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        
+        /* ========== CONTENT CARD ========== */
+        .content-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        
+        .content-card h2 {
+            color: var(--accent);
+            font-size: 22px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 10px;
+        }
+        
+        .content-card h3 {
+            color: var(--primary);
+            font-size: 18px;
+            margin-top: 20px;
+            margin-bottom: 12px;
+        }
+        
+        .content-card p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 12px;
+        }
+        
+        .content-card ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .content-card li {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        /* ========== BUTTONS ========== */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-download {
+            background: var(--accent);
+            color: white;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
+        }
+        
+        .btn-cta {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .btn-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(74, 74, 138, 0.3);
+        }
+        
+        /* ========== PDF PRINT STYLES ========== */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                max-width: 100%;
+            }
+            
+            .button-group {
+                display: none;
+            }
+            
+            .result-header,
+            .content-card {
+                box-shadow: none;
+                page-break-inside: avoid;
+                margin-bottom: 20px;
+                border: 1px solid #e0e0e0;
+            }
+        }
+        
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 600px) {
+            .result-header {
+                padding: 25px 20px;
+            }
+            
+            .result-header h1 {
+                font-size: 24px;
+            }
+            
+            .content-card {
+                padding: 20px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="result-header">
+            <h1>🎯 Ton Diagnostic</h1>
+            <p>Personnalisé pour accélérer ton lancement</p>
+            <div class="profile-badge" id="profileBadge">Profil Détecté...</div>
+        </div>
+        
+        <!-- MAIN CONTENT -->
+        <div id="diagnosticContent">
+            <!-- Content will be generated by JavaScript -->
+        </div>
+        
+        <!-- BUTTONS -->
+        <div class="button-group">
+            <button class="btn btn-download" onclick="downloadPDF()">📥 Télécharger mon diagnostic</button>
+            <button class="btn btn-cta" onclick="goToPack()">🚀 Je veux le Pack 72H à 19€</button>
+        </div>
+    </div>
+    
+    <script>
+        // Profile data
+        const profiles = {
+            chaos: {
+                name: "Mode CHAOS 🔴",
+                subtitle: "Paralysie totale - tu dois agir maintenant",
+                color: "#FF6B35",
+                description: "Tu es en mode 'zéro système'. C'est chaotique, tu gères au jour le jour. Bonne nouvelle: le Pack 72H est FAIT pour toi.",
+                whatsMissing: [
+                    "Un système clair (t'es perdu·e dans les tâches)",
+                    "Une landing page qui convertit",
+                    "Une séquence email professionnelle",
+                    "Un plan d'action pas à pas"
+                ],
+                whyPackWorks: "Le Pack 72H te donne les 8 outils + les 3 bonus exactement dans cet ordre. Pas de flou. Pas de doute. Juste de l'action qui convertit.",
+                nextSteps: [
+                    "Décision: tu veux vraiment lancer ou c'est juste une idée?",
+                    "Si OUI: accès au Pack 72H avec checklist jour 1-2-3",
+                    "Jour 1: Landing page + email 1",
+                    "Jour 2: Email 2-3 + automations",
+                    "Jour 3: LIVE et premières ventes"
+                ]
+            },
+            stagnation: {
+                name: "Mode STAGNATION 🟡",
+                subtitle: "Tu tournes en rond - besoin d'une vraie structure",
+                color: "#FF8C42",
+                description: "Tu génères un peu de revenus mais c'est bloqué. Tu veux plus mais tu sais pas comment passer à l'étape suivante.",
+                whatsMissing: [
+                    "Un système d'automations qui tue (tu fais tout manuellement)",
+                    "Une vraie page de vente (la tienne convertit mal)",
+                    "Des emails de suivi automatisés",
+                    "Un plan de scaling clair"
+                ],
+                whyPackWorks: "Le Pack 72H te sort de la stagnation en 3 jours. Les outils + les processus = tu peux enfin déléguer/automatiser.",
+                nextSteps: [
+                    "Prioriser: quel est ton frein #1 (page de vente? emails? système?)",
+                    "Pack 72H: tu vas débloquer le frein + mettre les autres en place",
+                    "Jour 1-3: Setup complet + premiers leads captés",
+                    "Jour 4+: Revenue + temps libre enfin!"
+                ]
+            },
+            blocage: {
+                name: "Mode BLOCAGE 🟠",
+                subtitle: "Perfectionniste bloquée - tu attends le moment idéal",
+                color: "#FF7A3D",
+                description: "T'as peur de mal faire. Tu veux que ce soit PARFAIT avant de lancer. Spoiler: ça doit juste EXISTER.",
+                whatsMissing: [
+                    "Permission d'être imparfait (c'est ton plus gros blocage)",
+                    "Un modèle à copier (plutôt que de créer from scratch)",
+                    "Un groupe de support (pour pas te sentir seule)",
+                    "Un plan anti-perfectionnisme"
+                ],
+                whyPackWorks: "Le Pack 72H te donne des templates PRÊTS. Tu copie-colle. Tu customise minimalement. Tu LANCES. Pas besoin d'attendre le moment parfait.",
+                nextSteps: [
+                    "Accepter: 'imparfait ET lancé' > 'parfait ET jamais'",
+                    "Pack 72H: templates clé-en-main = zéro paralysie",
+                    "Jour 1: LIVE même si c'est 80% (pas 100%)",
+                    "Jour 2-3: Optimiser en live = bien plus rapide"
+                ]
+            }
+        };
+        
+        // Get profile from URL
+        function getProfile() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('profile') || 'chaos';
+        }
+        
+        // Render diagnostic
+        function renderDiagnostic() {
+            const profile = getProfile();
+            const data = profiles[profile];
+            
+            if (!data) return;
+            
+            // Update badge
+            document.getElementById('profileBadge').textContent = data.name;
+            document.getElementById('profileBadge').style.background = data.color;
+            
+            // Build content
+            let html = '';
+            
+            html += '<div class="content-card">';
+            html += '<h2>Ta Situation Actuelle</h2>';
+            html += '<p>' + data.description + '</p>';
+            html += '</div>';
+            
+            html += '<div class="content-card">';
+            html += '<h2>Ce qui te manque</h2>';
+            html += '<ul>';
+            
+            data.whatsMissing.forEach(item => {
+                html += '<li>' + item + '</li>';
+            });
+            
+            html += '</ul>';
+            html += '</div>';
+            
+            html += '<div class="content-card">';
+            html += '<h2>Pourquoi le Pack 72H c\'est LA solution</h2>';
+            html += '<p>' + data.whyPackWorks + '</p>';
+            html += '</div>';
+            
+            html += '<div class="content-card">';
+            html += '<h2>Tes 3 prochaines actions</h2>';
+            html += '<ol style="margin-left: 20px;">';
+            
+            data.nextSteps.forEach(step => {
+                html += '<li>' + step + '</li>';
+            });
+            
+            html += '</ol>';
+            html += '</div>';
+            
+            html += '<div class="content-card" style="background: #F5F1E8; border-top: 4px solid ' + data.color + ';">';
+            html += '<h3>💡 Insider Tip</h3>';
+            html += '<p>Les coachs/infopreneurs qui réussissent ne sont pas plus talentueux·ses que toi. Ils/elles ont juste <strong>commencé</strong> avec un système clair. C\'est tout.</p>';
+            html += '<p style="margin-top: 12px;"><strong>Toi aussi, tu peux. En 72h.</strong></p>';
+            html += '</div>';
+            
+            document.getElementById('diagnosticContent').innerHTML = html;
+        }
+        
+        // Download PDF
+        function downloadPDF() {
+            const profile = getProfile();
+            const data = profiles[profile];
+            
+            const element = document.querySelector('.container');
+            const opt = {
+                margin: 10,
+                filename: `Diagnostic_${data.name.replace(/\s+/g, '_')}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+            
+            html2pdf().set(opt).from(element).save();
+        }
+        
+        // Go to pack
+        function goToPack() {
+            window.location.href = 'https://monbusinessdigital.fr/pack72h/';
+        }
+        
+        // Initialize
+        renderDiagnostic();
+    </script>
+</body>
+</html>

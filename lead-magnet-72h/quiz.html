@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Diagnostic - Mon Business Digital Boutique™</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #4A4A8A;
+            --secondary: #8B5FBF;
+            --accent: #FF6B35;
+            --dark: #2C2C2C;
+            --light: #F5F1E8;
+            --white: #FFFFFF;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--light) 0%, var(--white) 100%);
+            color: var(--dark);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* ========== HEADER ========== */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 16px;
+            color: #666;
+        }
+        
+        /* ========== PROGRESS BAR ========== */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #FF8C42);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+        }
+        
+        /* ========== EMAIL FORM (maintenant le Brevo form) ========== */
+        .email-form {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-top: 4px solid var(--accent);
+            display: none;
+        }
+        
+        .email-form.show {
+            display: block;
+            animation: slideIn 0.4s ease;
+        }
+        
+        .email-form h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .email-form p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .email-form ul {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .email-form li {
+            padding: 10px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #666;
+        }
+        
+        .email-form li:before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+            font-size: 18px;
+        }
+        
+        /* ========== BREVO IFRAME CONTAINER ========== */
+        .brevo-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .brevo-container iframe {
+            max-width: 100% !important;
+            width: 100% !important;
+        }
+        
+        /* ========== QUESTION CARD ========== */
+        .question-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            animation: slideIn 0.4s ease;
+        }
+        
+        .question-card.hidden {
+            display: none;
+        }
+        
+        .question-number {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        
+        .question-title {
+            font-size: 22px;
+            color: var(--dark);
+            margin-bottom: 30px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: flex-start;
+            padding: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+        
+        .option:hover {
+            border-color: var(--accent);
+            background: #fafafa;
+        }
+        
+        .option input[type="radio"] {
+            margin-top: 4px;
+            margin-right: 12px;
+            cursor: pointer;
+        }
+        
+        .option-text {
+            flex: 1;
+            color: var(--dark);
+            font-size: 15px;
+        }
+        
+        .option input[type="radio"]:checked ~ .option-text {
+            color: var(--accent);
+            font-weight: 700;
+        }
+        
+        /* ========== BUTTONS ========== */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-back {
+            background: #f0f0f0;
+            color: var(--dark);
+            padding: 14px 20px;
+        }
+        
+        .btn-back:hover {
+            background: #e0e0e0;
+        }
+        
+        .btn-next {
+            background: linear-gradient(135deg, var(--accent), #FF8C42);
+            color: var(--white);
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .btn-next:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
+        }
+        
+        .btn-next:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        /* ========== ANIMATIONS ========== */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .email-form,
+            .question-card {
+                padding: 20px;
+            }
+            
+            .button-group {
+                flex-direction: column-reverse;
+            }
+            
+            .btn-next {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>🎯 Ton Diagnostic Personnalisé</h1>
+            <p>Découvre ce qui te bloque vraiment en 5 minutes</p>
+        </div>
+        
+        <!-- PROGRESS BAR -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text">Question <span id="currentQuestion">1</span> / 7</div>
+        </div>
+        
+        <!-- EMAIL FORM (Brevo iframe) -->
+        <div class="email-form show" id="emailForm">
+            <h2>🛑 Attends!</h2>
+            <p>Pour débloquer ton diagnostic personnel + les outils pour passer à l'action, laisse-moi ton email.</p>
+            
+            <p style="font-weight: 600; margin: 25px 0 15px;">Tu recevras aussi (vrai bonus):</p>
+            <ul>
+                <li>Le checklist exact pour lancer en 72h</li>
+                <li>Insider tips du Pack</li>
+                <li>Accès avant tout le monde au prix 19€ (Bientôt 29€)</li>
+            </ul>
+            
+            <!-- BREVO IFRAME ICI -->
+            <div class="brevo-container">
+                <iframe width="540" height="305" src="https://91849e66.sibforms.com/serve/MUIFANeUXeYaxX1LVrT4AainhY7NxTCzhmzFtkAshVtoySerfscQsOpPN7qEc5cJBbLyz077jtw3ThTJ4Xw3DEoKUs5bzkZnd9Dgf1xX2CWNYWb1pOFG3Wpv4TzkcEa8sYnrlarreAM5hk_wTn1WhtRHbHvMx8VOeqQ4wXBg77xdPXgT3HD_WGE-4YEesdDuUl-5JU8-LSNtvqPxMQ==" frameborder="0" scrolling="auto" allowfullscreen style="display: block;margin-left: auto;margin-right: auto;max-width: 100%;"></iframe>
+            </div>
+        </div>
+        
+        <!-- QUIZ CONTAINER -->
+        <div id="quizContainer"></div>
+    </div>
+    
+    <script>
+        // ========== CONFIG ==========
+        const BREVO_API_KEY = 'xkeysib-c195332a90ab717f50e0d56fefebbf91afc854e13c7ce4';
+        const BREVO_LIST_ID = 3; // Newsletter – Boutique Digitale
+        
+        // Questions du quiz
+        const questions = [
+            {
+                id: 1,
+                title: "Combien de temps tu passes chaque mois sur des tâches admin/marketing que tu détestes?",
+                options: [
+                    { text: "Moins de 5h", weight: 1 },
+                    { text: "5-10h", weight: 2 },
+                    { text: "Plus de 15h", weight: 3 },
+                    { text: "Je perds le compte", weight: 4 }
+                ]
+            },
+            {
+                id: 2,
+                title: "Qu'est-ce qui te bloque le plus pour créer une vraie présence online?",
+                options: [
+                    { text: "Je ne sais pas par où commencer", weight: 2 },
+                    { text: "J'ai peur de mal faire / jugement", weight: 1 },
+                    { text: "Je n'ai pas d'outils / ça me paralyse", weight: 3 },
+                    { text: "Manque de temps", weight: 2 }
+                ]
+            },
+            {
+                id: 3,
+                title: "Avez une page de vente / landing page actuellement?",
+                options: [
+                    { text: "Non, zéro", weight: 3 },
+                    { text: "Oui, mais elle convertit mal (<2%)", weight: 2 },
+                    { text: "Oui, correcte (2-5%)", weight: 1 },
+                    { text: "Oui, très bonne (>5%)", weight: 0 }
+                ]
+            },
+            {
+                id: 4,
+                title: "Quel est ton plus gros blocage RIGHT NOW?",
+                options: [
+                    { text: "Je dois tout faire seul(e)", weight: 3 },
+                    { text: "Les formations coûtent trop cher", weight: 2 },
+                    { text: "Procrastination/cherche la perfection", weight: 3 },
+                    { text: "Formations trop chères/longues", weight: 4 }
+                ]
+            },
+            {
+                id: 5,
+                title: "Combien tu gagnes actuellement par mois avec ton activité?",
+                options: [
+                    { text: "0€ (pas encore lancé·e)", weight: 4 },
+                    { text: "100-500€", weight: 2 },
+                    { text: "500-2000€", weight: 1 },
+                    { text: "2000€+", weight: 0 }
+                ]
+            },
+            {
+                id: 6,
+                title: "Combien d'heures par semaine tu travailles sans avoir de system clair?",
+                options: [
+                    { text: "5-10h perdues", weight: 1 },
+                    { text: "10-20h perdues", weight: 2 },
+                    { text: "20h+ perdues (c'est chaotique)", weight: 3 },
+                    { text: "Je sais pas mais c'est beaucoup", weight: 3 }
+                ]
+            },
+            {
+                id: 7,
+                title: "Tu te vois dans combien de temps lancé·e avec un vrai system qui marche?",
+                options: [
+                    { text: "ASAP (je suis prête maintenant)", weight: 1 },
+                    { text: "Dans 2-4 semaines", weight: 2 },
+                    { text: "Dans 1-2 mois", weight: 3 },
+                    { text: "Je sais pas par où commencer", weight: 4 }
+                ]
+            }
+        ];
+        
+        // ========== STATE ==========
+        let currentQuestion = 0;
+        let userEmail = '';
+        let answers = [];
+        let emailSubmitted = false;
+        
+        // ========== INITIALIZE ==========
+        function init() {
+            // Écouter les messages du formulaire Brevo
+            window.addEventListener('message', function(event) {
+                // Brevo envoie des messages quand le formulaire est soumis
+                if (event.data && event.data.type === 'sibforms') {
+                    if (event.data.event === 'submitted' || event.data.event === 'success') {
+                        console.log('Brevo form submitted!');
+                        setTimeout(hideFormShowQuiz, 800);
+                    }
+                }
+            });
+            
+            // Fallback: bouton manuel après 12 sec si Brevo se soumet pas correctement
+            setTimeout(() => {
+                if (!emailSubmitted) {
+                    addManualButton();
+                }
+            }, 12000);
+        }
+        
+        // ========== HIDE FORM & SHOW QUIZ ==========
+        function hideFormShowQuiz() {
+            if (!emailSubmitted) {
+                emailSubmitted = true;
+                document.getElementById('emailForm').classList.remove('show');
+                document.getElementById('emailForm').style.display = 'none';
+                
+                // Reset progress et affiche question 1
+                currentQuestion = 0;
+                showQuestion(0);
+            }
+        }
+        
+        // ========== FALLBACK MANUAL BUTTON ==========
+        function addManualButton() {
+            const emailForm = document.getElementById('emailForm');
+            if (!emailForm.classList.contains('hidden')) {
+                const existingBtn = document.getElementById('manualContinueBtn');
+                if (!existingBtn) {
+                    const btn = document.createElement('button');
+                    btn.id = 'manualContinueBtn';
+                    btn.className = 'btn btn-next';
+                    btn.style.marginTop = '20px';
+                    btn.textContent = 'Continuer vers le quiz →';
+                    btn.onclick = hideFormShowQuiz;
+                    emailForm.appendChild(btn);
+                }
+            }
+        }
+        
+        // ========== QUESTION DISPLAY ==========
+        function showQuestion(index) {
+            const container = document.getElementById('quizContainer');
+            
+            if (index >= questions.length) {
+                // Quiz terminé, aller au résultat
+                goToResult();
+                return;
+            }
+            
+            const question = questions[index];
+            const progressPercent = ((index + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progressPercent + '%';
+            document.getElementById('currentQuestion').textContent = index + 1;
+            
+            let html = `
+                <div class="question-card">
+                    <div class="question-number">Question ${index + 1} de 7</div>
+                    <div class="question-title">${question.title}</div>
+                    <div class="options" id="optionsContainer">
+            `;
+            
+            question.options.forEach((option, i) => {
+                html += `
+                    <label class="option" onclick="selectOption(${index}, ${i})">
+                        <input type="radio" name="q${index}" value="${i}" ${answers[index] === i ? 'checked' : ''}>
+                        <div class="option-text">
+                            <strong>${option.text}</strong>
+                        </div>
+                    </label>
+                `;
+            });
+            
+            html += `
+                    </div>
+                    <div class="button-group">
+                        <button class="btn btn-back" onclick="previousQuestion()" ${index === 0 ? 'style="display:none"' : ''}>← Retour</button>
+                        <button class="btn btn-next" id="nextBtn" onclick="nextQuestion()" ${answers[index] === undefined ? 'disabled' : ''}>
+                            ${index === questions.length - 1 ? 'Voir mon diagnostic' : 'Suivant'} →
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+        
+        function selectOption(questionIndex, optionIndex) {
+            answers[questionIndex] = optionIndex;
+            document.getElementById('nextBtn').disabled = false;
+        }
+        
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion(currentQuestion);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+        
+        // ========== PROFILE DETECTION ==========
+        function detectProfile() {
+            let score = 0;
+            let profiles = {
+                chaos: 0,      // Profil 1: Paralysie totale
+                stagnation: 0, // Profil 2: Stagnation
+                blocage: 0     // Profil 3: Blocage perfectionniste
+            };
+            
+            // Calculer score
+            answers.forEach((answerIndex, questionIndex) => {
+                const weight = questions[questionIndex].options[answerIndex].weight;
+                score += weight;
+                
+                // Logique de détection par question
+                if (questionIndex === 4) { // Revenue question
+                    if (answerIndex === 0) profiles.chaos += 3;    // 0€
+                    else if (answerIndex === 1) profiles.stagnation += 2; // 100-500€
+                    else if (answerIndex === 2) profiles.stagnation += 3; // 500-2000€
+                }
+                
+                if (questionIndex === 1) { // Blocage question
+                    if (answerIndex === 0) profiles.chaos += 2;
+                    if (answerIndex === 3) profiles.chaos += 1;
+                }
+                
+                if (questionIndex === 2) { // Page de vente
+                    if (answerIndex === 0) profiles.chaos += 2;
+                    if (answerIndex === 2) profiles.chaos += 2;
+                }
+                
+                if (questionIndex === 3) { // Paralysie
+                    if (answerIndex === 1) profiles.blocage += 2;
+                    if (answerIndex === 2) profiles.blocage += 3;
+                    if (answerIndex === 3) profiles.chaos += 1;
+                }
+            });
+            
+            // Déterminer profil principal
+            let detectedProfile;
+            if (profiles.chaos >= profiles.stagnation && profiles.chaos >= profiles.blocage) {
+                detectedProfile = 'chaos';
+            } else if (profiles.stagnation >= profiles.blocage) {
+                detectedProfile = 'stagnation';
+            } else {
+                detectedProfile = 'blocage';
+            }
+            
+            // Sauvegarder
+            localStorage.setItem('quizProfile', detectedProfile);
+            localStorage.setItem('quizAnswers', JSON.stringify(answers));
+            
+            return detectedProfile;
+        }
+        
+        // ========== GO TO RESULT ==========
+        function goToResult() {
+            const profile = detectProfile();
+            window.location.href = `resultat.html?profile=${profile}`;
+        }
+        
+        // ========== INIT ==========
+        init();
+    </script>
+</body>
+</html>
